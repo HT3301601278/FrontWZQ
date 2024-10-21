@@ -1,11 +1,15 @@
 <template>
   <div class="alert-center">
     <h2 class="page-title">警报中心</h2>
-    <el-card class="main-card">
-      <template #header>
-        <div class="card-header">
-          <h3>警报列表</h3>
-          <el-form :inline="true" :model="filterForm" class="filter-form">
+    <el-row :gutter="20">
+      <el-col :xs="24" :sm="24" :md="8" :lg="6" :xl="5">
+        <el-card class="filter-card">
+          <template #header>
+            <div class="card-header">
+              <h3>筛选条件</h3>
+            </div>
+          </template>
+          <el-form :model="filterForm" label-position="top">
             <el-form-item label="设备">
               <el-select v-model="filterForm.device" placeholder="选择设备" clearable>
                 <el-option label="全部" value=""></el-option>
@@ -32,40 +36,52 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="handleFilter" icon="Search">筛选</el-button>
-              <el-button @click="resetFilter" icon="Refresh">重置</el-button>
+              <el-button type="primary" @click="handleFilter" icon="Search" class="filter-button">筛选</el-button>
+              <el-button @click="resetFilter" icon="Refresh" class="filter-button">重置</el-button>
             </el-form-item>
           </el-form>
-        </div>
-      </template>
-      <el-table :data="alerts" style="width: 100%" v-loading="loading">
-        <el-table-column prop="timestamp" label="时间" width="180">
-          <template #default="scope">
-            {{ formatDate(scope.row.timestamp) }}
+        </el-card>
+      </el-col>
+      <el-col :xs="24" :sm="24" :md="16" :lg="18" :xl="19">
+        <el-card class="alert-list-card">
+          <template #header>
+            <div class="card-header">
+              <h3>警报列表</h3>
+              <el-tag :type="getAlertStatusType()" effect="dark">
+                {{ getAlertStatusText() }}
+              </el-tag>
+            </div>
           </template>
-        </el-table-column>
-        <el-table-column prop="device.name" label="设备" width="150"></el-table-column>
-        <el-table-column prop="message" label="警报信息"></el-table-column>
-        <el-table-column label="状态" width="100">
-          <template #default="scope">
-            <el-tag :type="scope.row.status === 'RESOLVED' ? 'success' : 'danger'">
-              {{ scope.row.status === 'RESOLVED' ? '已解决' : '未解决' }}
-            </el-tag>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div class="pagination-container">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-sizes="[10, 20, 50, 100]"
-          :page-size="pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="totalAlerts"
-        ></el-pagination>
-      </div>
-    </el-card>
+          <el-table :data="alerts" style="width: 100%" v-loading="loading" :row-class-name="tableRowClassName">
+            <el-table-column prop="timestamp" label="时间" width="180">
+              <template #default="scope">
+                {{ formatDate(scope.row.timestamp) }}
+              </template>
+            </el-table-column>
+            <el-table-column prop="device.name" label="设备" width="150"></el-table-column>
+            <el-table-column prop="message" label="警报信息"></el-table-column>
+            <el-table-column label="状态" width="100">
+              <template #default="scope">
+                <el-tag :type="scope.row.status === 'RESOLVED' ? 'success' : 'danger'" effect="plain">
+                  {{ scope.row.status === 'RESOLVED' ? '已解决' : '未解决' }}
+                </el-tag>
+              </template>
+            </el-table-column>
+          </el-table>
+          <div class="pagination-container">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="currentPage"
+              :page-sizes="[10, 20, 50, 100]"
+              :page-size="pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="totalAlerts"
+            ></el-pagination>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -162,6 +178,27 @@ export default {
       })
     }
 
+    const getAlertStatusType = () => {
+      if (alerts.value.some(alert => alert.status !== 'RESOLVED')) {
+        return 'danger'
+      }
+      return 'success'
+    }
+
+    const getAlertStatusText = () => {
+      if (alerts.value.some(alert => alert.status !== 'RESOLVED')) {
+        return '有未解决警报'
+      }
+      return '全部已解决'
+    }
+
+    const tableRowClassName = ({ row }) => {
+      if (row.status !== 'RESOLVED') {
+        return 'danger-row'
+      }
+      return ''
+    }
+
     onMounted(() => {
       fetchDevices()
       fetchAlerts()
@@ -179,7 +216,10 @@ export default {
       resetFilter,
       handleSizeChange,
       handleCurrentChange,
-      formatDate
+      formatDate,
+      getAlertStatusType,
+      getAlertStatusText,
+      tableRowClassName
     }
   }
 }
@@ -188,25 +228,33 @@ export default {
 <style scoped>
 .alert-center {
   padding: 20px;
+  background-color: #f0f2f5;
+  min-height: 100vh;
 }
 
 .page-title {
-  font-size: 24px;
+  font-size: 28px;
   color: #303133;
   margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
 }
 
-.main-card {
-  background-color: #ffffff;
+.filter-card, .alert-list-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.filter-card:hover, .alert-list-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 .card-header h3 {
@@ -215,22 +263,29 @@ export default {
   color: #303133;
 }
 
-.filter-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+.filter-button {
+  width: 100%;
+  margin-bottom: 10px;
 }
 
-.el-form-item {
-  margin-bottom: 0;
+.el-select, .el-date-picker {
+  width: 100%;
 }
 
-.el-select {
-  width: 200px;
+.alert-list-card {
+  margin-bottom: 20px;
 }
 
-.el-date-picker {
-  width: 400px;
+.el-table {
+  margin-top: 20px;
+}
+
+.el-table :deep(.warning-row) {
+  background-color: #fdf6ec;
+}
+
+.el-table :deep(.danger-row) {
+  background-color: #fef0f0;
 }
 
 .pagination-container {
@@ -238,30 +293,9 @@ export default {
   text-align: right;
 }
 
-.el-table {
-  margin-top: 20px;
-}
-
-.el-table :deep(.el-table__header) {
-  background-color: #f5f7fa;
-}
-
-.el-table :deep(.el-table__row:hover) {
-  background-color: #f5f7fa;
-}
-
-.el-tag {
-  font-weight: bold;
-}
-
 @media (max-width: 768px) {
-  .filter-form {
-    flex-direction: column;
-  }
-
-  .el-select,
-  .el-date-picker {
-    width: 100%;
+  .filter-card {
+    margin-bottom: 20px;
   }
 }
 </style>
