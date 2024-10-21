@@ -44,7 +44,7 @@
                 class-name="column-time"
                 align="center">
               </el-table-column>
-              
+
               <el-table-column
                 prop="temperature"
                 label="温度 (°C)"
@@ -57,6 +57,15 @@
                 </template>
               </el-table-column>
             </el-table>
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="currentPage"
+              :page-sizes="[10, 20, 50, 100]"
+              :page-size="pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="totalElements"
+            ></el-pagination>
           </el-card>
         </el-col>
         <el-col :span="10">
@@ -97,6 +106,9 @@ export default {
     const temperatureTrendData = ref([])
     const temperatureDistributionChart = ref(null)
     let chartInstance = null
+    const currentPage = ref(1)
+    const pageSize = ref(10)
+    const totalElements = ref(0)
 
     const fetchDevices = async () => {
       loading.value = true
@@ -135,12 +147,15 @@ export default {
       try {
         const response = await axios.get(`http://47.116.66.208:8080/api/devices/${selectedDevice.value}/data`, {
           params: {
-            startTime,
-            endTime
+            startTime: startTime,
+            endTime: endTime,
+            page: currentPage.value - 1,
+            size: pageSize.value
           }
         })
 
         const data = response.data.content
+        totalElements.value = response.data.totalElements
         const temperatureValues = data.map(item => parseFloat(item.value))
         const recordTimes = data.map(item => item.recordTime)
         updateTemperatureTrendData(recordTimes, temperatureValues)
@@ -172,23 +187,23 @@ export default {
       }
 
       chartInstance = echarts.init(temperatureDistributionChart.value)
-      
+
       const categories = {
-        '极低温 (< 20°C)': 0,
-        '低温 (20-50°C)': 0,
-        '中温 (50-100°C)': 0,
-        '高温 (> 100°C)': 0
+        '极低温 (< 25°C)': 0,
+        '低温 (25-50°C)': 0,
+        '中温 (50-75°C)': 0,
+        '高温 (> 75°C)': 0
       }
 
       values.forEach(value => {
         if (value <= 20) {
-          categories['极低温 (< 20°C)']++
+          categories['极低温 (< 25°C)']++
         } else if (value <= 50) {
-          categories['低温 (20-50°C)']++
+          categories['低温 (25-50°C)']++
         } else if (value <= 100) {
-          categories['中温 (50-100°C)']++
+          categories['中温 (50-75°C)']++
         } else {
-          categories['高温 (> 100°C)']++
+          categories['高温 (> 75°C)']++
         }
       })
 
@@ -240,6 +255,16 @@ export default {
       return '#F56C6C'; // 红色，表示极高温
     }
 
+    const handleSizeChange = (val) => {
+      pageSize.value = val
+      fetchDeviceData()
+    }
+
+    const handleCurrentChange = (val) => {
+      currentPage.value = val
+      fetchDeviceData()
+    }
+
     onMounted(() => {
       fetchDevices()
       if (dateRange.value && dateRange.value.length === 2 && selectedDevice.value) {
@@ -255,6 +280,7 @@ export default {
 
     watch([dateRange, selectedDevice], () => {
       if (dateRange.value && dateRange.value.length === 2 && selectedDevice.value) {
+        currentPage.value = 1
         fetchDeviceData()
       }
     })
@@ -268,7 +294,12 @@ export default {
       temperatureDistributionChart,
       handleDateRangeChange,
       handleDeviceChange,
-      getTemperatureColor
+      getTemperatureColor,
+      currentPage,
+      pageSize,
+      totalElements,
+      handleSizeChange,
+      handleCurrentChange
     }
   }
 }
@@ -367,4 +398,9 @@ export default {
   }
 }
 </style>
+
+
+
+
+
 
