@@ -22,14 +22,16 @@
       <el-col :xs="24" :sm="24" :md="16">
         <el-card class="chart-card">
           <div class="chart-header">
-
+            <h3>实时温度数据</h3>
           </div>
           <div ref="temperatureChart" class="chart"></div>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="8">
         <el-card class="chart-card">
-          <h3>反应器状态分布</h3>
+          <div class="chart-header">
+            <h3>反应器状态分布</h3>
+          </div>
           <div ref="statusChart" class="chart"></div>
         </el-card>
       </el-col>
