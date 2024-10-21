@@ -92,10 +92,10 @@ export default {
     ]
 
     const recentAlerts = ref([
-      { time: '2023-06-01 10:30', reactor: '反应器A', type: '温度过高', status: '未解决' },
-      { time: '2023-06-01 09:15', reactor: '反应器B', type: '离线', status: '已解决' },
-      { time: '2023-05-31 23:45', reactor: '反应器C', type: '温度过低', status: '未解决' },
-      { time: '2023-05-31 20:10', reactor: '反应器D', type: '温度异常', status: '已解决' },
+      { time: '2024-03-01 02:35', reactor: '反应器A', type: '温度过高', status: '未解决' },
+      { time: '2024-04-01 08:40', reactor: '反应器B', type: '离线', status: '已解决' },
+      { time: '2024-05-31 10:25', reactor: '反应器C', type: '温度过低', status: '未解决' },
+      { time: '2024-06-31 03:12', reactor: '反应器D', type: '温度过高', status: '已解决' },
     ])
 
     const initTemperatureChart = () => {

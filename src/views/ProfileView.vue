@@ -1,32 +1,39 @@
 <template>
-  <div class="profile">
-    <h2>个人中心</h2>
+  <div class="profile-container">
     <el-row :gutter="20">
-      <el-col :span="8">
-        <el-card class="user-info-card">
-          <template #header>
-            <div class="card-header">
-              <span>用户信息</span>
-            </div>
-          </template>
+      <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="4">
+        <el-card class="user-card" shadow="hover">
           <div class="user-avatar">
-            <el-avatar :size="100" :src="userAvatar"></el-avatar>
+            <el-avatar :size="120" :src="userAvatar"></el-avatar>
           </div>
-          <div class="user-details">
-            <h3>{{ username }}</h3>
-            <p>用户ID: {{ userId }}</p>
-            <p>上次登录: {{ lastLogin }}</p>
-          </div>
+          <h2 class="username">{{ username }}</h2>
+          <p class="user-id">用户ID: {{ userId }}</p>
+          <p class="last-login">上次登录: {{ lastLogin }}</p>
         </el-card>
       </el-col>
-      <el-col :span="16">
-        <el-card class="password-card">
+      <el-col :xs="24" :sm="16" :md="18" :lg="19" :xl="20">
+        <el-card class="info-card" shadow="hover">
           <template #header>
             <div class="card-header">
-              <span>修改密码</span>
+              <h3>账户信息</h3>
             </div>
           </template>
-          <el-form :model="passwordForm" :rules="passwordRules" ref="passwordFormRef" label-width="100px">
+          <el-descriptions :column="2" border>
+            <el-descriptions-item label="用户名">{{ username }}</el-descriptions-item>
+            <el-descriptions-item label="用户ID">{{ userId }}</el-descriptions-item>
+            <el-descriptions-item label="上次登录">{{ lastLogin }}</el-descriptions-item>
+            <el-descriptions-item label="账户状态">
+              <el-tag type="success">正常</el-tag>
+            </el-descriptions-item>
+          </el-descriptions>
+        </el-card>
+        <el-card class="password-card" shadow="hover">
+          <template #header>
+            <div class="card-header">
+              <h3>修改密码</h3>
+            </div>
+          </template>
+          <el-form :model="passwordForm" :rules="passwordRules" ref="passwordFormRef" label-width="120px">
             <el-form-item label="旧密码" prop="oldPassword">
               <el-input v-model="passwordForm.oldPassword" type="password" show-password></el-input>
             </el-form-item>
@@ -37,7 +44,7 @@
               <el-input v-model="passwordForm.confirmPassword" type="password" show-password></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="changePassword">修改密码</el-button>
+              <el-button type="primary" @click="changePassword" :loading="loading">修改密码</el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -143,8 +150,35 @@ export default {
 </script>
 
 <style scoped>
-.profile {
+.profile-container {
   padding: 20px;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+}
+
+.user-card {
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+}
+
+.user-avatar {
+  margin-bottom: 20px;
+}
+
+.username {
+  font-size: 24px;
+  margin: 10px 0;
+}
+
+.user-id, .last-login {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.info-card, .password-card {
+  margin-bottom: 20px;
 }
 
 .card-header {
@@ -153,31 +187,23 @@ export default {
   align-items: center;
 }
 
-.user-info-card, .password-card {
-  height: 100%;
+.card-header h3 {
+  margin: 0;
+  color: #303133;
 }
 
-.user-avatar {
-  display: flex;
-  justify-content: center;
+.el-descriptions {
   margin-bottom: 20px;
 }
 
-.user-details {
-  text-align: center;
-}
-
-.user-details h3 {
-  margin-bottom: 10px;
-}
-
-.user-details p {
-  margin: 5px 0;
-  color: #606266;
-}
-
 .el-form {
-  max-width: 400px;
+  max-width: 500px;
   margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .user-card {
+    margin-bottom: 20px;
+  }
 }
 </style>

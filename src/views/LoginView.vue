@@ -219,7 +219,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
 }
 
 .login-card {
@@ -244,5 +244,5 @@ export default {
   margin-top: 10px;
 }
 
-/* 可以根据需要添加更多样式 */
+/* 可以根据需要添加更样式 */
 </style>
