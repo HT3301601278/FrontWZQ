@@ -319,7 +319,11 @@ export default {
     }
 
     onMounted(() => {
-      fetchDevices()
+      fetchDevices().then(() => {
+        if (devices.value.length > 0) {
+          showDeviceDetails(devices.value[0])
+        }
+      })
     })
 
     return {
