@@ -38,8 +38,18 @@
               </div>
             </template>
             <el-table :data="temperatureTrendData" style="width: 100%" height="350" :stripe="true" border>
-              <el-table-column prop="time" label="时间" width="180" align="center"></el-table-column>
-              <el-table-column prop="temperature" label="温度 (°C)" width="120" align="center">
+              <el-table-column
+                prop="time"
+                label="时间"
+                class-name="column-time"
+                align="center">
+              </el-table-column>
+              
+              <el-table-column
+                prop="temperature"
+                label="温度 (°C)"
+                class-name="column-temperature"
+                align="center">
                 <template #default="scope">
                   <span :style="{ color: getTemperatureColor(scope.row.temperature) }">
                     {{ scope.row.temperature }}
@@ -326,6 +336,15 @@ export default {
 
 .el-select {
   width: 200px;
+}
+
+/* 新增的列宽样式 */
+.column-time {
+  width: 70%;
+}
+
+.column-temperature {
+  width: 30%;
 }
 
 :deep(.el-card__header) {
