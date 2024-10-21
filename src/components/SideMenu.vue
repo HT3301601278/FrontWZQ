@@ -74,16 +74,16 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 16px;
+  padding: 20px;
   background-color: #f0f2f5;
   height: auto;
-  min-height: 60px;
+  min-height: 80px;
 }
 
 .logo {
-  width: 32px;
-  height: 32px;
-  margin-bottom: 8px;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
 }
 
 .title {
