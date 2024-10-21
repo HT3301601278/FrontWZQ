@@ -3,7 +3,7 @@
     <h2 class="dashboard-title">反应器温度监测仪表盘</h2>
 
     <el-row :gutter="20">
-      <el-col :span="6" v-for="(card, index) in cards" :key="index">
+      <el-col :xs="24" :sm="12" :md="6" v-for="(card, index) in cards" :key="index">
         <el-card class="dashboard-card" :body-style="{ padding: '0px' }">
           <div class="card-content" :style="{ backgroundColor: card.color }">
             <el-icon :size="40" color="#ffffff">
@@ -19,7 +19,7 @@
     </el-row>
 
     <el-row :gutter="20" class="chart-row">
-      <el-col :span="16">
+      <el-col :xs="24" :sm="24" :md="16">
         <el-card class="chart-card">
           <template #header>
             <div class="card-header">
@@ -29,17 +29,17 @@
               </el-select>
             </div>
           </template>
-          <div ref="temperatureChart" style="height: 300px;"></div>
+          <div ref="temperatureChart" class="chart"></div>
         </el-card>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :sm="24" :md="8">
         <el-card class="chart-card">
           <template #header>
             <div class="card-header">
               <span>反应器状态分布</span>
             </div>
           </template>
-          <div ref="statusChart" style="height: 300px;"></div>
+          <div ref="statusChart" class="chart"></div>
         </el-card>
       </el-col>
     </el-row>
@@ -205,6 +205,8 @@ export default {
 <style scoped>
 .dashboard {
   padding: 20px;
+  background-color: #f0f2f5;
+  min-height: 100vh;
 }
 
 .dashboard-title {
@@ -212,6 +214,7 @@ export default {
   font-weight: bold;
   margin-bottom: 20px;
   color: #303133;
+  text-align: center;
 }
 
 .dashboard-card {
@@ -219,11 +222,12 @@ export default {
   border-radius: 8px;
   overflow: hidden;
   transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .card-content {
@@ -254,6 +258,7 @@ export default {
 
 .chart-card {
   height: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
@@ -268,9 +273,28 @@ export default {
 
 .alert-card {
   height: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.chart {
+  height: 300px;
 }
 
 .el-table {
   margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .dashboard-card {
+    margin-bottom: 10px;
+  }
+
+  .chart-row {
+    margin-top: 10px;
+  }
+
+  .alert-row {
+    margin-top: 10px;
+  }
 }
 </style>
