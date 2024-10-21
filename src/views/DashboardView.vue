@@ -1,12 +1,12 @@
 <template>
   <div class="dashboard">
-    <h2 class="dashboard-title">反应器温度监测仪表盘</h2>
+    <h1 class="dashboard-title">反应器温度监测仪表盘</h1>
 
-    <el-row :gutter="20">
+    <el-row :gutter="20" class="dashboard-row">
       <el-col :xs="24" :sm="12" :md="6" v-for="(card, index) in cards" :key="index">
         <el-card class="dashboard-card" :body-style="{ padding: '0px' }">
-          <div class="card-content" :style="{ backgroundColor: card.color }">
-            <el-icon :size="40" color="#ffffff">
+          <div class="card-content" :class="card.class">
+            <el-icon :size="40">
               <component :is="card.icon" />
             </el-icon>
             <div class="card-info">
@@ -18,41 +18,30 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="20" class="chart-row">
+    <el-row :gutter="20" class="dashboard-row">
       <el-col :xs="24" :sm="24" :md="16">
         <el-card class="chart-card">
-          <template #header>
-            <div class="card-header">
-              <span>实时温度曲线图</span>
-              <el-select v-model="selectedReactor" placeholder="选择反应器" size="small">
-                <el-option v-for="reactor in reactors" :key="reactor.id" :label="reactor.name" :value="reactor.id"></el-option>
-              </el-select>
-            </div>
-          </template>
+          <div class="chart-header">
+
+          </div>
           <div ref="temperatureChart" class="chart"></div>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="8">
         <el-card class="chart-card">
-          <template #header>
-            <div class="card-header">
-              <span>反应器状态分布</span>
-            </div>
-          </template>
+          <h3>反应器状态分布</h3>
           <div ref="statusChart" class="chart"></div>
         </el-card>
       </el-col>
     </el-row>
 
-    <el-row :gutter="20" class="alert-row">
+    <el-row :gutter="20" class="dashboard-row">
       <el-col :span="24">
         <el-card class="alert-card">
-          <template #header>
-            <div class="card-header">
-              <span>最近警报</span>
-              <el-button type="text" @click="viewAllAlerts">查看全部</el-button>
-            </div>
-          </template>
+          <div class="alert-header">
+            <h3>最近警报</h3>
+            <el-button type="text" @click="viewAllAlerts">查看全部</el-button>
+          </div>
           <el-table :data="recentAlerts" style="width: 100%">
             <el-table-column prop="time" label="时间" width="180"></el-table-column>
             <el-table-column prop="reactor" label="反应器"></el-table-column>
@@ -87,10 +76,10 @@ export default {
     const selectedReactor = ref('')
 
     const cards = reactive([
-      { title: '总反应器数量', value: 42, icon: 'Monitor', color: '#409EFF' },
-      { title: '在线反应器数量', value: 38, icon: 'Sunny', color: '#67C23A' },
-      { title: '平均温度', value: '75.6 °C', icon: 'DataLine', color: '#E6A23C' },
-      { title: '异常反应器数量', value: 2, icon: 'Warning', color: '#F56C6C' },
+      { title: '总反应器数量', value: 42, icon: 'Monitor', class: 'blue-card' },
+      { title: '在线反应器数量', value: 38, icon: 'Sunny', class: 'green-card' },
+      { title: '平均温度', value: '75.6 °C', icon: 'DataLine', class: 'orange-card' },
+      { title: '异常反应器数量', value: 2, icon: 'Warning', class: 'red-card' },
     ])
 
     const reactors = [
@@ -110,14 +99,12 @@ export default {
     const initTemperatureChart = () => {
       const chart = echarts.init(temperatureChart.value)
       const option = {
-        title: {
-          text: '实时温度'
-        },
         tooltip: {
           trigger: 'axis'
         },
         xAxis: {
           type: 'category',
+          boundaryGap: false,
           data: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00']
         },
         yAxis: {
@@ -145,10 +132,6 @@ export default {
     const initStatusChart = () => {
       const chart = echarts.init(statusChart.value)
       const option = {
-        title: {
-          text: '反应器状态分布',
-          left: 'center'
-        },
         tooltip: {
           trigger: 'item'
         },
@@ -160,7 +143,8 @@ export default {
           {
             name: '反应器状态',
             type: 'pie',
-            radius: '50%',
+            radius: '60%',
+            center: ['50%', '50%'],
             data: [
               { value: 38, name: '正常运行' },
               { value: 2, name: '异常' },
@@ -210,16 +194,22 @@ export default {
 }
 
 .dashboard-title {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   color: #303133;
   text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.dashboard-row {
+  margin-bottom: 20px;
 }
 
 .dashboard-card {
-  margin-bottom: 20px;
-  border-radius: 8px;
+  height: 120px;
+  border-radius: 10px;
   overflow: hidden;
   transition: all 0.3s;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -233,68 +223,78 @@ export default {
 .card-content {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 20px;
+  height: 100%;
   color: #ffffff;
 }
 
+.blue-card { background: linear-gradient(135deg, #3498db, #2980b9); }
+.green-card { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+.orange-card { background: linear-gradient(135deg, #e67e22, #d35400); }
+.red-card { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+
 .card-info {
-  margin-left: 20px;
+  text-align: right;
 }
 
 .card-title {
-  font-size: 14px;
+  font-size: 16px;
   opacity: 0.8;
+  margin-bottom: 5px;
 }
 
 .card-value {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
-  margin-top: 5px;
 }
 
-.chart-row {
-  margin-top: 20px;
-}
-
-.chart-card {
-  height: 100%;
+.chart-card, .alert-card {
+  height: 400px;
+  border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
 }
 
-.card-header {
+.chart-header, .alert-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #ebeef5;
 }
 
-.alert-row {
-  margin-top: 20px;
-}
-
-.alert-card {
-  height: 100%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+.chart-header h3, .alert-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #303133;
 }
 
 .chart {
-  height: 300px;
+  height: 320px;
+  padding: 20px;
 }
 
 .el-table {
   margin-top: 10px;
 }
 
+.alert-card {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
 @media (max-width: 768px) {
   .dashboard-card {
-    margin-bottom: 10px;
+    height: 100px;
   }
 
-  .chart-row {
-    margin-top: 10px;
+  .chart-card, .alert-card {
+    height: auto;
   }
 
-  .alert-row {
-    margin-top: 10px;
+  .chart {
+    height: 250px;
   }
 }
 </style>
