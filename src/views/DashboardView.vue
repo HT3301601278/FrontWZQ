@@ -135,33 +135,33 @@ export default {
       const chart = echarts.init(statusChart.value)
       const option = {
         tooltip: {
-          trigger: 'item'
-        },
-        legend: {
-          orient: 'vertical',
-          left: 'left'
-        },
-        series: [
-          {
-            name: '反应器状态',
-            type: 'pie',
-            radius: '60%',
-            center: ['50%', '50%'],
-            data: [
-              { value: 38, name: '正常运行' },
-              { value: 2, name: '异常' },
-              { value: 1, name: '维护中' },
-              { value: 1, name: '离线' }
-            ],
-            emphasis: {
-              itemStyle: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-              }
-            }
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
           }
-        ]
+        },
+        xAxis: {
+          type: 'category',
+          data: ['正常', '警告', '异常', '离线']
+        },
+        yAxis: {
+          type: 'value',
+          name: '反应器数量'
+        },
+        series: [{
+          data: [35, 3, 2, 2],
+          type: 'bar',
+          itemStyle: {
+            color: function(params) {
+              const colors = ['#67C23A', '#E6A23C', '#F56C6C', '#909399'];
+              return colors[params.dataIndex];
+            }
+          },
+          label: {
+            show: true,
+            position: 'top'
+          }
+        }]
       }
       chart.setOption(option)
     }
