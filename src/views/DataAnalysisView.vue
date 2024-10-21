@@ -37,7 +37,7 @@
                 </el-tooltip>
               </div>
             </template>
-            <el-table :data="temperatureTrendData" style="width: 100%" height="350" :stripe="true" border>
+            <el-table :data="temperatureTrendData" style="width: 100%" height="450" :stripe="true" border>
               <el-table-column
                 prop="time"
                 label="时间"
