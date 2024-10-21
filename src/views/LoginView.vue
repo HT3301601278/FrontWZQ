@@ -23,7 +23,7 @@
           <el-button type="primary" @click="handleLogin" :loading="loading" class="login-button">登录</el-button>
         </el-form-item>
       </el-form>
-      
+
       <el-form v-else :model="registerForm" :rules="registerRules" ref="registerFormRef">
         <el-form-item prop="username" label="用户名">
           <el-input v-model="registerForm.username" placeholder="请输入用户名">
@@ -50,7 +50,7 @@
           <el-button type="primary" @click="handleRegister" :loading="registerLoading" class="login-button">注册</el-button>
         </el-form-item>
       </el-form>
-      
+
       <div class="form-toggle">
         <el-button type="text" @click="toggleForm">
           {{ isLoginForm ? '注册新账号' : '返回登录' }}
@@ -61,11 +61,11 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue'
-import { useRouter } from 'vue-router'
-import { ElMessage } from 'element-plus'
-import { User, Lock } from '@element-plus/icons-vue'
-import { useStore } from 'vuex'
+import {reactive, ref} from 'vue'
+import {useRouter} from 'vue-router'
+import {ElMessage} from 'element-plus'
+import {Lock, User} from '@element-plus/icons-vue'
+import {useStore} from 'vuex'
 import axios from 'axios'
 
 export default {

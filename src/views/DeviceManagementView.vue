@@ -62,9 +62,9 @@
             </el-descriptions-item>
             <el-descriptions-item label="温度阈值 (°C)">{{ selectedDevice.threshold }}</el-descriptions-item>
           </el-descriptions>
-          
+
           <el-divider content-position="left">反应器控制</el-divider>
-          
+
           <el-form label-position="top">
             <el-form-item label="反应器开关">
               <el-switch
@@ -85,9 +85,9 @@
               ></el-input-number>
             </el-form-item>
           </el-form>
-          
+
           <el-divider content-position="left">最近数据</el-divider>
-          
+
           <div ref="recentDataChart" style="height: 300px;"></div>
         </el-card>
       </div>
@@ -129,8 +129,8 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted, computed } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import {computed, onMounted, reactive, ref} from 'vue'
+import {ElMessage, ElMessageBox} from 'element-plus'
 import * as echarts from 'echarts'
 import axios from 'axios'
 
@@ -455,7 +455,7 @@ export default {
   .device-container {
     flex-direction: column;
   }
-  
+
   .device-list, .device-details {
     flex: none;
   }

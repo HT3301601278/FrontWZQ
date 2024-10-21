@@ -86,10 +86,10 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted } from 'vue'
+import {onMounted, reactive, ref} from 'vue'
 import axios from 'axios'
-import { ElMessage } from 'element-plus'
-import { Search, Refresh } from '@element-plus/icons-vue'
+import {ElMessage} from 'element-plus'
+import {Refresh, Search} from '@element-plus/icons-vue'
 
 export default {
   name: 'AlertCenterView',

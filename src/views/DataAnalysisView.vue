@@ -87,11 +87,11 @@
 </template>
 
 <script>
-import { ref, onMounted, watch, onUnmounted } from 'vue'
+import {onMounted, onUnmounted, ref, watch} from 'vue'
 import * as echarts from 'echarts'
 import axios from 'axios'
-import { ElMessage } from 'element-plus'
-import { InfoFilled } from '@element-plus/icons-vue'
+import {ElMessage} from 'element-plus'
+import {InfoFilled} from '@element-plus/icons-vue'
 
 export default {
   name: 'DataAnalysisView',

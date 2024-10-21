@@ -63,10 +63,10 @@
 </template>
 
 <script>
-import { ref, onMounted, reactive } from 'vue'
-import { Monitor, Sunny, Warning, DataLine } from '@element-plus/icons-vue'
+import {onMounted, reactive, ref} from 'vue'
+import {DataLine, Monitor, Sunny, Warning} from '@element-plus/icons-vue'
 import * as echarts from 'echarts'
-import { useRouter } from 'vue-router'
+import {useRouter} from 'vue-router'
 
 export default {
   name: 'DashboardView',

@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
-import { Odometer, Monitor, DataLine, Bell, User } from '@element-plus/icons-vue'
+import {defineComponent, ref} from 'vue'
+import {Bell, DataLine, Monitor, Odometer, User} from '@element-plus/icons-vue'
 
 export default defineComponent({
   name: 'SideMenu',

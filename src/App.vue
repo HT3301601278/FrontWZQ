@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import { ElConfigProvider } from 'element-plus'
+import {ElConfigProvider} from 'element-plus'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
-import { onMounted } from 'vue'
+import {useStore} from 'vuex'
+import {useRouter} from 'vue-router'
+import {onMounted} from 'vue'
 
 export default {
   name: 'App',

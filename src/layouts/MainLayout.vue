@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import {defineComponent, ref} from 'vue'
 import TopNavBar from '@/components/TopNavBar.vue'
 import SideMenu from '@/components/SideMenu.vue'
 

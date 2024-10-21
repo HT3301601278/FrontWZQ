@@ -21,10 +21,10 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
-import { ArrowDown } from '@element-plus/icons-vue'
-import { useStore } from 'vuex'
+import {computed, defineComponent, ref} from 'vue'
+import {useRouter} from 'vue-router'
+import {ArrowDown} from '@element-plus/icons-vue'
+import {useStore} from 'vuex'
 
 export default defineComponent({
   name: 'TopNavBar',

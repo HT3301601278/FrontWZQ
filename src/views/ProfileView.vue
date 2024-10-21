@@ -54,10 +54,10 @@
 </template>
 
 <script>
-import { ref, reactive, computed } from 'vue'
-import { ElMessage } from 'element-plus'
+import {computed, reactive, ref} from 'vue'
+import {ElMessage} from 'element-plus'
 import axios from 'axios'
-import { useStore } from 'vuex'
+import {useStore} from 'vuex'
 
 export default {
   name: 'ProfileView',
