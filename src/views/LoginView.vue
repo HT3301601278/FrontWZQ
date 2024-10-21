@@ -4,7 +4,7 @@
       <template #header>
         <h2 class="system-title">反应器温度在线监测系统</h2>
       </template>
-      <el-form :model="loginForm" :rules="rules" ref="loginFormRef">
+      <el-form v-if="isLoginForm" :model="loginForm" :rules="rules" ref="loginFormRef">
         <el-form-item prop="username">
           <el-input v-model="loginForm.username" placeholder="用户名">
             <template #prefix>
@@ -23,13 +23,8 @@
           <el-button type="primary" @click="handleLogin" :loading="loading" class="login-button">登录</el-button>
         </el-form-item>
       </el-form>
-      <div class="register-link">
-        <el-button type="text" @click="showRegisterDialog">注册新账号</el-button>
-      </div>
-    </el-card>
-
-    <el-dialog v-model="registerDialogVisible" title="注册新账号" width="400px" custom-class="register-dialog">
-      <el-form :model="registerForm" :rules="registerRules" ref="registerFormRef" label-position="top">
+      
+      <el-form v-else :model="registerForm" :rules="registerRules" ref="registerFormRef">
         <el-form-item prop="username" label="用户名">
           <el-input v-model="registerForm.username" placeholder="请输入用户名">
             <template #prefix>
@@ -51,14 +46,17 @@
             </template>
           </el-input>
         </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handleRegister" :loading="registerLoading" class="login-button">注册</el-button>
+        </el-form-item>
       </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="registerDialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="handleRegister" :loading="registerLoading">注册</el-button>
-        </span>
-      </template>
-    </el-dialog>
+      
+      <div class="form-toggle">
+        <el-button type="text" @click="toggleForm">
+          {{ isLoginForm ? '注册新账号' : '返回登录' }}
+        </el-button>
+      </div>
+    </el-card>
   </div>
 </template>
 
@@ -78,6 +76,7 @@ export default {
     const loginFormRef = ref(null)
     const registerFormRef = ref(null)
     const store = useStore()
+    const isLoginForm = ref(true)
 
     const loginForm = reactive({
       username: '',
@@ -121,7 +120,6 @@ export default {
 
     const loading = ref(false)
     const registerLoading = ref(false)
-    const registerDialogVisible = ref(false)
 
     const handleLogin = () => {
       loginFormRef.value.validate(async (valid) => {
@@ -149,10 +147,6 @@ export default {
       })
     }
 
-    const showRegisterDialog = () => {
-      registerDialogVisible.value = true
-    }
-
     const handleRegister = () => {
       registerFormRef.value.validate(async (valid) => {
         if (valid) {
@@ -164,7 +158,7 @@ export default {
             })
             if (response.data && response.data.id) {
               ElMessage.success('注册成功')
-              registerDialogVisible.value = false
+              isLoginForm.value = true // 注册成功后切换到登录表单
               // 清空注册表单
               registerForm.username = ''
               registerForm.password = ''
@@ -197,6 +191,10 @@ export default {
       })
     }
 
+    const toggleForm = () => {
+      isLoginForm.value = !isLoginForm.value
+    }
+
     return {
       loginForm,
       registerForm,
@@ -204,12 +202,12 @@ export default {
       registerRules,
       loading,
       registerLoading,
-      registerDialogVisible,
+      isLoginForm,
       loginFormRef,
       registerFormRef,
       handleLogin,
-      showRegisterDialog,
-      handleRegister
+      handleRegister,
+      toggleForm
     }
   }
 }
@@ -241,44 +239,10 @@ export default {
   width: 100%;
 }
 
-.register-link {
+.form-toggle {
   text-align: center;
   margin-top: 10px;
 }
 
-.register-dialog {
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.register-dialog .el-dialog__header {
-  background-color: #409EFF;
-  padding: 20px;
-}
-
-.register-dialog .el-dialog__title {
-  color: #fff;
-  font-size: 20px;
-}
-
-.register-dialog .el-dialog__body {
-  padding: 30px 20px;
-}
-
-.register-dialog .el-form-item__label {
-  font-weight: bold;
-}
-
-.register-dialog .el-input__inner {
-  border-radius: 4px;
-}
-
-.register-dialog .dialog-footer {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.register-dialog .dialog-footer .el-button {
-  min-width: 100px;
-}
+/* 可以根据需要添加更多样式 */
 </style>
