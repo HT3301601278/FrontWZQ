@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <h2 class="dashboard-title">反应器温度监测仪表盘</h2>
-    
+
     <el-row :gutter="20">
       <el-col :span="6" v-for="(card, index) in cards" :key="index">
         <el-card class="dashboard-card" :body-style="{ padding: '0px' }">
