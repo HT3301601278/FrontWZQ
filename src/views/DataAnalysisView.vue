@@ -196,11 +196,11 @@ export default {
       }
 
       values.forEach(value => {
-        if (value <= 20) {
+        if (value < 25) {
           categories['极低温 (< 25°C)']++
-        } else if (value <= 50) {
+        } else if (value < 50) {
           categories['低温 (25-50°C)']++
-        } else if (value <= 100) {
+        } else if (value < 75) {
           categories['中温 (50-75°C)']++
         } else {
           categories['高温 (> 75°C)']++
@@ -249,10 +249,10 @@ export default {
 
     const getTemperatureColor = (temperature) => {
       const temp = parseFloat(temperature);
-      if (temp <= 20) return '#409EFF'; // 蓝色，表示低温
-      if (temp <= 50) return '#67C23A'; // 绿色，表示正常温度
-      if (temp <= 100) return '#E6A23C'; // 橙色，表示高温
-      return '#F56C6C'; // 红色，表示极高温
+      if (temp < 25) return '#91CC75'; // 绿色，表示极低温
+      if (temp < 50) return '#FAC858'; // 黄色，表示低温
+      if (temp < 75) return '#EE6666'; // 橙色，表示中温
+      return '#73C0DE'; // 蓝色，表示高温
     }
 
     const handleSizeChange = (val) => {
@@ -398,6 +398,9 @@ export default {
   }
 }
 </style>
+
+
+
 
 
 
