@@ -99,7 +99,7 @@ export default {
         if (valid) {
           try {
             const response = await axios.put(
-              `http://47.116.66.208:8080/api/users/${store.state.user.id}/password`,
+              `http://8.155.16.118:8080/api/users/${store.state.user.id}/password`,
               null,
               {
                 params: {

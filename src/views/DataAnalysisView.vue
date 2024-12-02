@@ -113,7 +113,7 @@ export default {
     const fetchDevices = async () => {
       loading.value = true
       try {
-        const response = await axios.get('http://47.116.66.208:8080/api/devices')
+        const response = await axios.get('http://8.155.16.118:8080/api/devices')
         devices.value = response.data.content
         console.log('获取到的设备列表:', devices.value)
       } catch (error) {
@@ -145,7 +145,7 @@ export default {
       const endTime = dateRange.value[1].toISOString().slice(0, 19).replace('T', ' ')
 
       try {
-        const response = await axios.get(`http://47.116.66.208:8080/api/devices/${selectedDevice.value}/data`, {
+        const response = await axios.get(`http://8.155.16.118:8080/api/devices/${selectedDevice.value}/data`, {
           params: {
             startTime: startTime,
             endTime: endTime,

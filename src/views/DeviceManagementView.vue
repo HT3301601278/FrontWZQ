@@ -183,7 +183,7 @@ export default {
             if (deviceData.threshold === null || deviceData.threshold === '') {
               delete deviceData.threshold
             }
-            const response = await axios.post('http://47.116.66.208:8080/api/devices', deviceData)
+            const response = await axios.post('http://8.155.16.118:8080/api/devices', deviceData)
             if (response.data) {
               ElMessage.success('设备添加成功')
               addDeviceDialogVisible.value = false
@@ -211,7 +211,7 @@ export default {
         }
       ).then(async () => {
         try {
-          await axios.delete(`http://47.116.66.208:8080/api/devices/${device.id}`)
+          await axios.delete(`http://8.155.16.118:8080/api/devices/${device.id}`)
           ElMessage.success('设备删除成功')
           fetchDevices()
         } catch (error) {
@@ -237,7 +237,7 @@ export default {
 
     const toggleDevice = async (value) => {
       try {
-        const response = await axios.put(`http://47.116.66.208:8080/api/devices/${selectedDevice.value.id}/toggle`)
+        const response = await axios.put(`http://8.155.16.118:8080/api/devices/${selectedDevice.value.id}/toggle`)
         if (response.data && response.data.id) {
           ElMessage.success(`设备${response.data.isOn ? '开启' : '关闭'}成功`)
           selectedDevice.value = response.data
@@ -253,7 +253,7 @@ export default {
 
     const setDeviceThreshold = async (value) => {
       try {
-        await axios.put(`http://47.116.66.208:8080/api/devices/${selectedDevice.value.id}`, {
+        await axios.put(`http://8.155.16.118:8080/api/devices/${selectedDevice.value.id}`, {
           ...selectedDevice.value,
           threshold: value
         })
@@ -293,7 +293,7 @@ export default {
 
     const fetchDevices = async () => {
       try {
-        const response = await axios.get(`http://47.116.66.208:8080/api/devices?page=${currentPage.value - 1}&size=${pageSize.value}`)
+        const response = await axios.get(`http://8.155.16.118:8080/api/devices?page=${currentPage.value - 1}&size=${pageSize.value}`)
         devices.value = response.data.content
         totalElements.value = response.data.totalElements
         if (selectedDevice.value) {

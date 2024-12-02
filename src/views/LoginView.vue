@@ -126,7 +126,7 @@ export default {
         if (valid) {
           loading.value = true
           try {
-            const response = await axios.post('http://47.116.66.208:8080/api/users/login', loginForm)
+            const response = await axios.post('http://8.155.16.118:8080/api/users/login', loginForm)
             if (response.data && response.data.id) {
               store.commit('setUser', response.data)
               store.commit('setAuthenticated', true)
@@ -152,7 +152,7 @@ export default {
         if (valid) {
           registerLoading.value = true
           try {
-            const response = await axios.post('http://47.116.66.208:8080/api/users/register', {
+            const response = await axios.post('http://8.155.16.118:8080/api/users/register', {
               username: registerForm.username,
               password: registerForm.password
             })

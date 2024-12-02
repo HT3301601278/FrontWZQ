@@ -112,7 +112,7 @@ export default {
 
     const fetchDevices = async () => {
       try {
-        const response = await axios.get('http://47.116.66.208:8080/api/devices')
+        const response = await axios.get('http://8.155.16.118:8080/api/devices')
         devices.value = response.data.content
       } catch (error) {
         console.error('获取设备列表失败:', error)
@@ -122,14 +122,14 @@ export default {
 
     const fetchAlerts = async () => {
       loading.value = true
-      let url = `http://47.116.66.208:8080/api/alerts?page=${currentPage.value - 1}&size=${pageSize.value}`
+      let url = `http://8.155.16.118:8080/api/alerts?page=${currentPage.value - 1}&size=${pageSize.value}`
 
       if (filterForm.device && filterForm.dateRange && filterForm.dateRange.length === 2) {
-        url = `http://47.116.66.208:8080/api/alerts/device/${filterForm.device}/timerange?startDate=${filterForm.dateRange[0]}&endDate=${filterForm.dateRange[1]}&page=${currentPage.value - 1}&size=${pageSize.value}`
+        url = `http://8.155.16.118:8080/api/alerts/device/${filterForm.device}/timerange?startDate=${filterForm.dateRange[0]}&endDate=${filterForm.dateRange[1]}&page=${currentPage.value - 1}&size=${pageSize.value}`
       } else if (filterForm.device) {
-        url = `http://47.116.66.208:8080/api/alerts/device/${filterForm.device}?page=${currentPage.value - 1}&size=${pageSize.value}`
+        url = `http://8.155.16.118:8080/api/alerts/device/${filterForm.device}?page=${currentPage.value - 1}&size=${pageSize.value}`
       } else if (filterForm.dateRange && filterForm.dateRange.length === 2) {
-        url = `http://47.116.66.208:8080/api/alerts/timerange?startDate=${filterForm.dateRange[0]}&endDate=${filterForm.dateRange[1]}&page=${currentPage.value - 1}&size=${pageSize.value}`
+        url = `http://8.155.16.118:8080/api/alerts/timerange?startDate=${filterForm.dateRange[0]}&endDate=${filterForm.dateRange[1]}&page=${currentPage.value - 1}&size=${pageSize.value}`
       }
 
       try {

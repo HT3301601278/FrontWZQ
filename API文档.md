@@ -1,6 +1,6 @@
 # 反应器温度在线监测系统 API 文档
 
-基础URL: http://47.116.66.208:8080/api
+基础URL: http://8.155.16.118:8080/api
 
 ## 1. 用户认证
 
@@ -32,7 +32,7 @@
 #### 测试用例
 
 ```
-POST http://47.116.66.208:8080/api/users/login
+POST http://8.155.16.118:8080/api/users/login
 Content-Type: application/json
 
 {
@@ -70,7 +70,7 @@ Content-Type: application/json
 #### 测试用例
 
 ```
-POST http://47.116.66.208:8080/api/users/register
+POST http://8.155.16.118:8080/api/users/register
 Content-Type: application/json
 
 {
@@ -115,7 +115,7 @@ Content-Type: application/json
 #### 测试用例
 
 ```
-GET http://47.116.66.208:8080/api/devices?page=0&size=10
+GET http://8.155.16.118:8080/api/devices?page=0&size=10
 ```
 
 ### 2.2 添加新设备
@@ -151,7 +151,7 @@ GET http://47.116.66.208:8080/api/devices?page=0&size=10
 #### 测试用例
 
 ```
-POST http://47.116.66.208:8080/api/devices
+POST http://8.155.16.118:8080/api/devices
 Content-Type: application/json
 
 {
@@ -184,7 +184,7 @@ Content-Type: application/json
 #### 测试用例
 
 ```
-GET http://47.116.66.208:8080/api/devices/1
+GET http://8.155.16.118:8080/api/devices/1
 ```
 
 ### 2.4 更新设备信息
@@ -220,7 +220,7 @@ GET http://47.116.66.208:8080/api/devices/1
 #### 测试用例
 
 ```
-PUT http://47.116.66.208:8080/api/devices/1
+PUT http://8.155.16.118:8080/api/devices/1
 Content-Type: application/json
 
 {
@@ -244,7 +244,7 @@ Content-Type: application/json
 #### 测试用例
 
 ```
-DELETE http://47.116.66.208:8080/api/devices/1
+DELETE http://8.155.16.118:8080/api/devices/1
 ```
 
 ### 2.6 切换设备开关状态
@@ -269,7 +269,7 @@ DELETE http://47.116.66.208:8080/api/devices/1
 #### 测试用例
 
 ```
-PUT http://47.116.66.208:8080/api/devices/1/toggle
+PUT http://8.155.16.118:8080/api/devices/1/toggle
 ```
 
 ## 3. 设备数据
@@ -307,7 +307,7 @@ PUT http://47.116.66.208:8080/api/devices/1/toggle
 #### 测试用例
 
 ```
-GET http://47.116.66.208:8080/api/devices/1/data?startTime=2023-01-01 00:00:00&endTime=2023-12-31 23:59:59&page=0&size=10
+GET http://8.155.16.118:8080/api/devices/1/data?startTime=2023-01-01 00:00:00&endTime=2023-12-31 23:59:59&page=0&size=10
 ```
 
 ## 4. 警报管理
@@ -349,7 +349,7 @@ GET http://47.116.66.208:8080/api/devices/1/data?startTime=2023-01-01 00:00:00&e
 #### 测试用例
 
 ```
-GET http://47.116.66.208:8080/api/alerts?deviceId=1&startTime=2023-01-01 00:00:00&endTime=2023-12-31 23:59:59&page=0&size=10
+GET http://8.155.16.118:8080/api/alerts?deviceId=1&startTime=2023-01-01 00:00:00&endTime=2023-12-31 23:59:59&page=0&size=10
 ```
 
 ### 4.2 更新警报状态
@@ -383,7 +383,7 @@ GET http://47.116.66.208:8080/api/alerts?deviceId=1&startTime=2023-01-01 00:00:0
 #### 测试用例
 
 ```
-PUT http://47.116.66.208:8080/api/alerts/1
+PUT http://8.155.16.118:8080/api/alerts/1
 Content-Type: application/json
 
 {
@@ -412,7 +412,7 @@ Content-Type: application/json
 #### 测试用例
 
 ```
-GET http://47.116.66.208:8080/api/users/me
+GET http://8.155.16.118:8080/api/users/me
 Authorization: Bearer {token}
 ```
 
@@ -438,7 +438,7 @@ Authorization: Bearer {token}
 #### 测试用例
 
 ```
-PUT http://47.116.66.208:8080/api/users/password
+PUT http://8.155.16.118:8080/api/users/password
 Authorization: Bearer {token}
 Content-Type: application/json
 
